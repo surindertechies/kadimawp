@@ -1,0 +1,78 @@
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) and (orientation: portrait) {
+    .philosophy .col-lg-4{max-width: 50%;-ms-flex: 50%;flex: 50%;}
+    .navbar-light .navbar-nav .nav-link{padding: 10px 16px;}
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+    .navbar-light .navbar-nav .nav-link{padding: 10px 15px;}
+    .first-banner-box {padding: 30px;width: 450px;height: 280px;}
+    .first-banner-box h1 {font-size: 52px;line-height: inherit;}
+    .feature-box .feature-texts p{font-size: 16px;}
+    .philosophy, .callto-action, .guide, .value, .our-classes, .gallery, .our-teacher, .teachers-banner, .become-teacher{padding: 50px 0;}
+    .philosophy{padding: 50px 0 0;}
+    .callto-action, .guide, .value{padding: 50px 0;}
+    .testimonial{padding: 50px 0 100px;}
+    .value-box{min-height: 500px;}
+    .cms-classes-grid .classes-item .entry-body{min-height: 304px;}
+    .our-classes .jcarousel-control-prev1{left: -30px;}
+    .our-classes .jcarousel-control-next1{right: -30px;}
+    .teachers-banner{background-position: 65% 100%;}
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    .top-bar{display: none !important;}
+    .first-banner-box{height: 160px;width: 250px;padding: 15px;}
+    .first-banner-box h1{font-size: 28px;line-height: 30px;}
+    .first-banner-box p{font-size: 18px;line-height: inherit;margin: 5px 0 10px;}
+    .philosophy, .callto-action, .guide, .value, .our-classes, .gallery, .our-teacher, .teachers-banner, .become-teacher{padding: 50px 0;}
+    .philosophy .row .col-lg-4:nth-child(2){display: none;}
+    .feature-box a.box-icon{float: left;}
+    .feature-box .feature-texts{margin-left: 100px;margin-right: 0;text-align: left;}
+    .mmb-30{margin-bottom: 30px;}
+    .testimonial{padding: 50px 0 100px;}
+    .callto-action h3{font-size: 25px;}
+    footer{word-break: break-all;}
+    .copy-right{text-align: center;}
+    .copy-right .copy-r{text-align: center;margin-top: 5px;}
+    footer h3{font-size: 24px;}
+    ul.social-media li{margin-bottom: 15px;}
+    ul.social-media li:last-child{margin-bottom: 0;}
+    .value-box{min-height: 500px;}
+    .cms-classes-grid .classes-item .entry-body{min-height: 398px;}
+    .our-classes .jcarousel-control-next1{right: -25px;}
+    .our-classes .jcarousel-control-prev1{left: -25px;}
+    .our-teacher .grid-item{margin-bottom: 30px;}
+    .our-teacher .green-button{margin-top: 40px;}
+    .teachers-banner{background-position: 65% 100%;}
+}
+@media only screen and (max-device-width:736px) {
+    .top-bar .left-side-bar, .top-bar .right-side-bar{float: none;text-align: center;}
+    .top-bar .left-side-bar{margin-top: 15px;}
+    .top-bar .right-side-bar{margin: 15px 0;}
+    .top-bar{display: none !important;}
+    .first-banner-box{height: 150px;width: 230px;left: 15px;padding: 15px;}
+    .first-banner-box h1{font-size: 26px;line-height: 30px;}
+    .first-banner-box p{font-size: 18px;line-height: inherit;margin: 5px 0 10px;}
+    .carousel-control-next, .carousel-control-prev{z-index: 999;width: 8%;}
+    .carousel-control-next .arrow-box, .carousel-control-prev .arrow-box{background: none;width: 40px;height: 40px;border-radius: 8px;line-height: 50px;}
+    .carousel-indicators{bottom: -20px;}
+    .philosophy, .callto-action, .guide, .value, .our-classes, .gallery, .our-teacher, .teachers-banner, .become-teacher{padding: 50px 0;}
+    .philosophy .row .col-lg-4:nth-child(2){display: none;}
+    .feature-box, .feature-box .feature-texts, .copy-right, .copy-right .copy-r{text-align: center;}
+    .feature-box .feature-texts, .feature-box.icon-box-left .feature-texts{margin: 0;}
+    .feature-box a.box-icon, .feature-box.icon-box-left a.box-icon{float: none;margin: auto;}
+    .callto-action a{margin-top: 24px;}
+    .guide img{margin-bottom: 30px;}
+    .mmb-30{margin-bottom: 30px;}
+    .testimonial{padding: 50px 0 100px;}
+    footer h3{margin: 20px 0 15px;}
+    .copy-right{padding: 15px 0;}
+    .copy-right .copy-r{margin-top: 10px;}
+    #banner .green-button {padding: 6px 24px;}
+    .our-classes .jcarousel-control-next1, .our-classes .jcarousel-control-prev1{font-size: 0;}
+    .our-classes .jcarousel-control-next1{right: -10px;} 
+    .our-classes .jcarousel-control-prev1{left: -10px;}
+    .breadcrumb{text-align: center;}
+    .breadcrumb ul{text-align: center;margin-top: 10px;}
+    .gallery .filter-button-group button{margin: 0 9px 20px;}
+    .post-activities .post-content{padding: 20px 15px;}
+    .our-teacher .green-button{margin-top: 30px;}
+}
