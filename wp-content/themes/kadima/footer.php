@@ -14,7 +14,7 @@
 <footer>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3 social">
+			<div class="col-md-4 social">
 				<a href="/kadima/wp/"><img src="<?php echo bloginfo('template_directory')?>/images/logo.png" alt="Kadima School" /></a>
 				<p>Come visit The Kadami School for yourself so you can tour the rooms and meet some of our educators. We offer high Quality early education.</p>
 				<ul class="social-media">
@@ -24,25 +24,14 @@
 					<li><a class="green-bg" href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
 				</ul>
 			</div>
-			<div class="col-md-3 address">
+			<div class="col-md-4 address">
 				<h3>Contact Us</h3>
 				<p><i class="fa fa-mobile fs20"></i> <span><a href="tel:8886661234">888 666 1234</a></span></p>
 				<p><i class="fa fa-envelope"></i> <span><a href="mailto:kadimaschool@info.com">kadimaschool@info.com</a></span></p>
 				<p><i class="fa fa-map-marker"></i> <span>Suite 12000 San Francisco</span></p>
 				<p><i class="fa fa-clock-o"></i> <span>Mon - Sat(8am - 5pm) Sunday CLOSED</span></p>
 			</div>
-			<div class="col-md-3 footer-link">
-				<h3>Activities</h3>
-				<ul>
-					<li><a href="#">Creative Activites</a></li>
-					<li><a href="#">Sport Activites</a></li>
-					<li><a href="#">Table/Floor Toys</a></li>
-					<li><a href="#">Water Games</a></li>
-					<li><a href="#">Building Blocks</a></li>
-					<li><a href="#">Outdoor Games</a></li>
-				</ul>
-			</div>
-			<div class="col-md-3 newsletter">
+			<div class="col-md-4 newsletter">
 				<h3>Newsletter</h3>
 				<p>Subscribe to our Newsletter right now to be updated.</p>
 				<form method="POST">
@@ -96,6 +85,7 @@
 <script type="text/javascript" src="<?php echo bloginfo('template_directory')?>/js/jquery.jcarousel.min.js"></script>
 <script type="text/javascript" src="<?php echo bloginfo('template_directory')?>/js/jcarousel.responsive.js"></script>
 <script type="text/javascript" src="<?php echo bloginfo('template_directory')?>/js/isotope-docs.min.js"></script>
+<script type="text/javascript" src="<?php echo bloginfo('template_directory')?>/js/jcarousel.connected-carousels.js"></script>
 <script type="text/javascript">
 jQuery(document).ready(function(){
     jQuery("#button1").trigger('click');	

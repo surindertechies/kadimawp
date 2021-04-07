@@ -42,6 +42,7 @@
     .our-teacher .grid-item{margin-bottom: 30px;}
     .our-teacher .green-button{margin-top: 40px;}
     .teachers-banner{background-position: 65% 100%;}
+    .cms-cmsevents-grid.layout2 .grid-item-inner .cmsevents-item .entry-featured{max-width: 158px;}
 }
 @media only screen and (max-device-width:736px) {
     .top-bar .left-side-bar, .top-bar .right-side-bar{float: none;text-align: center;}
@@ -54,7 +55,8 @@
     .carousel-control-next, .carousel-control-prev{z-index: 999;width: 8%;}
     .carousel-control-next .arrow-box, .carousel-control-prev .arrow-box{background: none;width: 40px;height: 40px;border-radius: 8px;line-height: 50px;}
     .carousel-indicators{bottom: -20px;}
-    .philosophy, .callto-action, .guide, .value, .our-classes, .gallery, .our-teacher, .teachers-banner, .become-teacher{padding: 50px 0;}
+    .philosophy, .callto-action, .guide, .value, .our-classes, .gallery, .our-teacher, .teachers-banner, .become-teacher,
+    .events {padding: 50px 0;}
     .philosophy .row .col-lg-4:nth-child(2){display: none;}
     .feature-box, .feature-box .feature-texts, .copy-right, .copy-right .copy-r{text-align: center;}
     .feature-box .feature-texts, .feature-box.icon-box-left .feature-texts{margin: 0;}
@@ -75,4 +77,31 @@
     .gallery .filter-button-group button{margin: 0 9px 20px;}
     .post-activities .post-content{padding: 20px 15px;}
     .our-teacher .green-button{margin-top: 30px;}
+
+    .events{padding-bottom: 0;}
+    .cms-cmsevents-grid.layout2 .grid-item-inner .cmsevents-item .entry-featured, .cms-cmsevents-grid.layout2 .grid-item-inner .cmsevents-item .entry-featured img {
+        max-height: 250px;
+        min-height: 200px;
+        margin-right: 0;
+    }
+    .cms-cmsevents-grid.layout2 .grid-item-inner .cmsevents-item .entry-featured {
+        margin-top: -1px;
+        -webkit-border-radius: 18px 18px 0 0;
+        -khtml-border-radius: 18px 18px 0 0;
+        -moz-border-radius: 18px 18px 0 0;
+        -ms-border-radius: 18px 18px 0 0;
+        -o-border-radius: 18px 18px 0 0;
+        border-radius: 18px 18px 0 0;
+    }
+    .cms-cmsevents-grid.layout2 .grid-item-inner .cmsevents-item {
+        display: block;
+    }
+    .cms-cmsevents-grid.layout2 .grid-item-inner .cmsevents-item .entry-featured{max-width: 100%;}
+    .cms-cmsevents-grid.layout2 .grid-item-inner .cmsevents-item .entry-body {
+        padding: 35px 20px;
+    }
+    .cms-count-down.layout2 .cms-count-down-container .time-item {
+        width: 50%;
+        margin-bottom: 30px;
+    }
 }

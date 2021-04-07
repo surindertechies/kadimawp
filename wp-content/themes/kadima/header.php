@@ -20,8 +20,11 @@
 	<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
 	<!-- CSS -->
 	<link rel="stylesheet" href="<?php echo bloginfo('template_directory')?>/css/font-awesome.css">
+	<link rel="stylesheet" href="<?php echo bloginfo('template_directory')?>/css/jcarousel.connected-carousels.css">
 	<link rel="stylesheet" href="<?php echo bloginfo('template_directory')?>/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?php echo bloginfo('template_directory')?>/style.css">
 	<link rel="stylesheet" href="<?php echo bloginfo('template_directory')?>/css/jcarousel.responsive.css">
@@ -64,32 +67,6 @@
 					<div class="search-btn" data-toggle="modal" data-target="#exampleModalCenter">
 						<img src="<?php echo bloginfo('template_directory')?>/images/search-icon.png" alt="search" />
 					</div>
-					<!--<ul class="navbar-nav ml-auto">
-						<li class="nav-item active">
-							<a class="nav-link" href="/kadima/wp/">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/kadima/wp/about-us/">About Us</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Classes</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Events</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Teachers</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Blog</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Contact Us</a>
-						</li>
-						<li class="nav-item" data-toggle="modal" data-target="#exampleModalCenter">
-							<img src="<?php //echo bloginfo('template_directory')?>/images/search-icon.png" alt="search" />
-						</li>
-					</ul>-->
 				</div>
 			</nav>
 		</div>
@@ -142,7 +119,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-7">
-				<h3>About Our Story</h3>
+				<h3><?php the_title();?></h3>
 			</div>
 			<div class="col-md-5">
 				<ul>

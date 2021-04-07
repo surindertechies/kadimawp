@@ -864,3 +864,274 @@ function show_gallery( $atts ){
     endif;
 return $html;
 }
+
+/*-----------------Event----------------------*/
+
+add_action('admin_enqueue_scripts', 'my_admin_theme_script');
+
+function my_admin_theme_script() {
+	wp_enqueue_script('jquery-ui-core');
+	wp_enqueue_script('jquery-ui-datepicker');
+	wp_enqueue_script( 'wp-jquery-date-picker', get_template_directory_uri() . '/js/admin.js' );
+	
+}
+function esad_admin_styles() {
+	wp_enqueue_style( 'jquery-ui', get_template_directory_uri() . '/css/jquery-ui.css',false,'1.1','all');	
+}
+add_action('admin_print_styles', 'esad_admin_styles');
+
+
+function save_custom_event_meta($post_id) {
+  global $post, $event_meta;
+	// verify nonce
+	if (!wp_verify_nonce($_POST['event_time_noncename'], plugin_basename(__FILE__))) {
+        return $post_id;
+    }
+	if (!wp_verify_nonce($_POST['event_location_noncename'], plugin_basename(__FILE__))) {
+        return $post_id;
+    }
+	if (!wp_verify_nonce($_POST['event_date_noncename'], plugin_basename(__FILE__))) {
+        return $post_id;
+    }
+	if (!wp_verify_nonce($_POST['event_end_date_noncename'], plugin_basename(__FILE__))) {
+        return $post_id;
+    }
+	if (!wp_verify_nonce($_POST['organizer_name_noncename'], plugin_basename(__FILE__))) {
+        return $post_id;
+    }
+	if (!wp_verify_nonce($_POST['organizer_phone_noncename'], plugin_basename(__FILE__))) {
+        return $post_id;
+    }
+	if (!wp_verify_nonce($_POST['organizer_email_noncename'], plugin_basename(__FILE__))) {
+        return $post_id;
+    }
+	
+    // check autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return $post_id;
+    }
+
+    // check permissions
+    if ('page' == $_POST['post_type']) {
+        if (!current_user_can('edit_page', $post_id)) {
+            return $post_id;
+        }
+    } elseif (!current_user_can('edit_post', $post_id)) {
+        return $post_id;
+    }
+	
+	$event_meta['organizer_name'] = $_POST['organizer_name'];
+	$event_meta['organizer_phone'] = $_POST['organizer_phone'];
+	$event_meta['organizer_email'] = $_POST['organizer_email'];
+	$event_meta['event_time'] = $_POST['event_time'];
+	$event_meta['event_location'] = $_POST['event_location'];
+	$event_meta['event_end_date'] = date('Y-m-d',strtotime($_POST['event_end_date']));
+	$event_meta['event_date'] = date('Y-m-d',strtotime($_POST['event_date']));
+
+    // Add values of $events_meta as custom fields
+    foreach ($event_meta as $key => $value) { // Cycle through the $events_meta array!
+        if( $post->post_type == 'revision' ) return; // Don't store custom data twice
+        $value = implode(',', (array)$value); // If $value is an array, make it a CSV (unlikely)
+        if(get_post_meta($post->ID, $key, FALSE)) { // If the custom field already has a value
+            update_post_meta($post->ID, $key, $value);
+        } else { // If the custom field doesn't have a value
+            add_post_meta($post->ID, $key, $value);
+        }
+        if(!$value) delete_post_meta($post->ID, $key); // Delete if blank
+    }
+}
+add_action('save_post', 'save_custom_event_meta');
+
+// Event post type
+$event_labels = array(
+	'name' => _x('Events', 'post type general name'),
+	'singular_name' => _x('Event', 'post type singular name'),
+	'add_new' => _x('Add New', 'Event'),
+	'add_new_item' => __("Add New Event"),
+	'edit_item' => __("Edit Event"),
+	'new_item' => __("New Event"),
+	'view_item' => __("View Events"),
+	'search_items' => __("Search Events"),
+	'not_found' =>  __('No Events found'),
+	'not_found_in_trash' => __('No Events found in Trash'),
+	'parent_item_colon' => ''
+);
+register_post_type( 'event',
+	array(
+		'hierarchical' => true,
+		'labels' => $event_labels,
+		'public' => true,
+		'query_var' => true,
+		'menu_icon' => 'dashicons-businessman',
+		'show_ui' => true,
+		'exclude_from_search' => true,
+		'supports' => array (  'title','editor', 'thumbnail' ),
+	)
+);
+
+add_action('admin_init', 'custom_meta_vale');
+function custom_meta_vale() {
+	add_meta_box('custom_info', __('Extra Event Fields', 'quotable'), 'event_extra_info', array( 'event'), 'side', 'low');
+}
+
+function event_extra_info(){
+	global $post;
+	// Noncename needed to verify where the data originated
+	echo '<input type="hidden" name="event_date_noncename" id="event_date_noncename" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	echo '<input type="hidden" name="event_time_noncename" id="event_time_noncename" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	echo '<input type="hidden" name="event_end_date_noncename" id="event_end_date_noncename" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	echo '<input type="hidden" name="event_location_noncename" id="event_location_noncename" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	echo '<input type="hidden" name="organizer_name_noncename" id="organizer_name_noncename" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	echo '<input type="hidden" name="organizer_phone_noncename" id="organizer_phone_noncename" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	echo '<input type="hidden" name="organizer_email_noncename" id="organizer_email_noncename" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	// Get the default_product data if its already been entered
+  
+	echo '<label>Organizer Name</label><br/><input style="width:100%;" type="text" name="organizer_name" id="organizer_name" value="' . esc_attr( get_post_meta( get_the_ID(), 'organizer_name', true) ). '" /><br/><br/>';
+	echo '<label>Organizer Phone</label><br/><input style="width:100%;" type="text" name="organizer_phone"  id="organizer_phone" value="' . esc_attr( get_post_meta( get_the_ID(), 'organizer_phone', true) ). '" /><br/><br/>';
+	echo '<label>Organizer Email</label><br/><input style="width:100%;" type="text" name="organizer_email" id="organizer_email" value="' . esc_attr( get_post_meta( get_the_ID(), 'organizer_email', true) ). '" /><br/><br/>';
+	echo '<label>Event Date</label><br/><input style="width:100%;" type="text" name="event_date" class="datepicker" id="event_date" value="' . esc_attr( get_post_meta( get_the_ID(), 'event_date', true) ). '" /><br/><br/>';
+	echo '<label>Event End Date</label><br/><input style="width:100%;" type="text" name="event_end_date" class="datepicker" id="event_end_date" value="' . esc_attr( get_post_meta( get_the_ID(), 'event_end_date', true) ). '" /><br/><br/>';
+	echo '<label>Event Time</label><br/><input style="width:100%;" type="text" name="event_time" id="event_time" value="' . esc_attr( get_post_meta( get_the_ID(), 'event_time', true) ). '" /><br/><br/>';
+	echo '<label>Event Location</label><br/><textarea rows="2" style="width:100%;"  name="event_location" id="event_location"  />' . esc_attr( get_post_meta( get_the_ID(), 'event_location', true) ). '</textarea><br/><br/>';
+}
+
+/*---------------------Upcoming-Event-shortcode----------------------------*/
+
+add_shortcode('upcoming_event_list','upcoming_event_list_shortcode');
+function upcoming_event_list_shortcode(){
+	$today= date('Y-m-d');query_posts(array('post_type'=>'event', 'meta_key' => 'event_date',
+	'orderby' => 'meta_value',
+	'meta_query'=>array(
+		'key'=>'event_date',
+		'value'=> $today,
+		'compare'=> '>='
+	),
+	'order'=>'ASC' ));
+		if(have_posts()) {
+		while(have_posts()) : the_post();
+		$event_date = get_post_meta(get_the_ID(),'event_date', true);
+			$result .='
+			<div class="grid-item col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
+				<div class="grid-item-inner">
+					<div class="cmsevents-item">
+						<div class="entry-featured" style="background-image: url('. get_the_post_thumbnail_url().');"></div>
+						<div class="entry-body">
+							<h3 class="entry-title"><a href="'. get_permalink() .'"> '. get_the_title() .'</a></h3>
+							<div class="entry-meta">
+							<div class="item-box item-box-date"> <label><i class="fa fa-calendar"></i> Start day: </label> <span>'. date("d", strtotime($event_date)).', '.date("F", strtotime($event_date)).', '.date("Y", strtotime($event_date)).'</div>
+							<div class="item-box item-box-time"> <label><i class="fa fa-clock-o"></i> Time: </label> <span>'. get_post_meta(get_the_ID(),'event_time', true) .'</span></div>
+							<div class="item-box item-box-place"> <label><i class="fa fa-map-marker"></i> Place: </label> <span>'. get_post_meta(get_the_ID(),'event_location', true) .'</span></div>
+							</div>
+							<div class="entry-readmore"> <a class="btn-more" href="'. get_permalink() .'">Read more <i class="fa fa-long-arrow-right"></i> </a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			';
+		endwhile; wp_reset_query();
+		} else {
+			echo '<div class="text-center"><div class="date text-center"><h3>No Upcoming Event</h3></div></div>';
+		}
+return $result; }
+
+/*---------------------Past-Event-shortcode----------------------------*/
+
+add_shortcode('past_event_list','past_event_list_shortcode');
+function past_event_list_shortcode(){
+	$today= date('Y-m-d');
+	query_posts(array('post_type'=>'event', 'meta_key' => 'event_date',
+	'orderby' => 'meta_value',
+	'meta_query'=>array(
+		'key'=>'event_date',
+		'value'=> $today,
+		'compare'=> '<'
+	),
+	'order'=>'DESC' ));
+		if(have_posts()) {
+		while(have_posts()) : the_post();
+		$event_date = get_post_meta(get_the_ID(),'event_date', true);
+			$result .='
+			<div class="event-box '.strtotime($event_date).'">
+				<div class="row align-items-center">
+					<div class="col-md-3 date">
+						<h3>'. date("d", strtotime($event_date)).', '.date("F", strtotime($event_date)).'<br /> '.date("Y", strtotime($event_date)).'</h3>
+						<p>'. get_post_meta(get_the_ID(),'event_location', true) .'</p>
+					</div>
+					<div class="col-md-9 event-detail">
+						<h2><a href="'. get_permalink() .'"> '. get_the_title() .'</a></h2>
+						'. get_the_excerpt() .'
+					</div>
+				</div>
+			</div>';
+		endwhile; wp_reset_query();
+		} else{
+			echo '<div class="event-box"><div class="date text-center"><h3>No Past Event</h3></div></div>';
+		}
+return $result; }
+
+add_shortcode('upcoming_event_countdown_script','upcoming_event_countdown_script_shortcode');
+function upcoming_event_countdown_script_shortcode(){
+	$today= date('Y-m-d');query_posts(array('post_type'=>'event', 'meta_key' => 'event_date',
+	'orderby' => 'meta_value',
+	'posts_per_page' =>1,
+	'meta_query'=>array(
+		'key'=>'event_date',
+		'value'=> $today,
+		'compare'=> '>='
+	),
+	'order'=>'ASC' ));
+		if(have_posts()) {
+		while(have_posts()) : the_post();
+		$event_date = get_post_meta(get_the_ID(),'event_date', true);
+			$result .='
+			<script>
+				// The data/time we want to countdown to 
+				var countDownDate = new Date("'. date("m", strtotime($event_date)).' '.date("d", strtotime($event_date)).', '.date("Y", strtotime($event_date)).' 00:00:00").getTime();
+				// Run myfunc every second
+				var myfunc = setInterval(function() {
+
+				var now = new Date().getTime();
+				var timeleft = countDownDate - now;
+					
+				// Calculating the days, hours, minutes and seconds left
+				var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+				var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+					
+				// Result is output to the specific element
+				document.getElementById("days").innerHTML = days
+				document.getElementById("hours").innerHTML = hours
+				document.getElementById("minutes").innerHTML = minutes 
+				document.getElementById("seconds").innerHTML = seconds 
+					
+				// Display the message when countdown is over
+				if (timeleft < 0) {
+					clearInterval(myfunc);
+					document.getElementById("days").innerHTML = "00"
+					document.getElementById("hours").innerHTML = "00" 
+					document.getElementById("minutes").innerHTML = "00"
+					document.getElementById("seconds").innerHTML = "00"
+					document.getElementById("end").innerHTML = "TIME UP!!";
+				}
+				}, 1000);
+			</script>
+			';
+		endwhile; wp_reset_query();
+		} 
+return $result; }
+
+
+
+
+function content($num) {
+	$theContent = get_the_content();
+	$output = preg_replace('/<img[^>]+./','', $theContent);
+	$output = preg_replace( '/<blockquote>.*<\/blockquote>/', '', $output );
+	$output = preg_replace( '|\[(.+?)\](.+?\[/\\1\])?|s', '', $output );
+	$limit = $num+1;
+	$content = explode(' ', $output, $limit);
+	array_pop($content);
+	$content = implode(" ",$content)."...";
+	echo $content;
+}
